@@ -68,7 +68,7 @@ downmix(inputFile, options)
 
 ### Example File
 
-An example Dolby Atmos WAV file can be downloaded from the following link: Download Example File (https://www.dropbox.com/scl/fo/asa4hh8a0r6ppmz063kct/h?rlkey=jv1tet93u4utir3bwa2hjn300&e=1&dl=0)
+An example Dolby Atmos WAV file can be downloaded from the following link: [Download Example File](https://www.dropbox.com/scl/fo/asa4hh8a0r6ppmz063kct/h?rlkey=jv1tet93u4utir3bwa2hjn300&e=1&dl=0)
 
 ### Running the Tests
 
