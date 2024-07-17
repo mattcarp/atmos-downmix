@@ -4,4 +4,4 @@ node_modules/
 *.tmp
 coverage/
 media/
-!media/.gitkeep
+!media/.gitkeep.DS_Store
