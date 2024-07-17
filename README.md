@@ -71,22 +71,25 @@ npm test
 
 ### Project Structure
 
+
 .
+├── README.md
 ├── SPEC.md
 ├── config
-│   └── defaults.js
+│   └── defaults.js
 ├── media
-│   ├── The Visitor at the Window2_atmos.wav
-│   └── output
-│       └── .gitkeep
+│   └── output
+├── output.mp3
+├── output.wav
 ├── package-lock.json
 ├── package.json
 ├── src
-│   ├── ffmpegWrapper.js
-│   └── server.js
-├── test
-│   └── ffmpegWrapper.test.js
-└── README.md
+│   ├── ffmpegWrapper.js
+│   └── server.js
+└── test
+    └── ffmpegWrapper.test.js
+
+
 
 ## FFmpeg 7.x Requirements
 
