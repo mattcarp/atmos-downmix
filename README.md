@@ -16,7 +16,10 @@
 
 ## Installation
 
+
 1. Clone the repository:
+
+```sh
 
    git clone https://github.com/mattcarp/atmos-downmix.git
    cd atmos-downmix
@@ -24,21 +27,24 @@
 2. Install the dependencies:
 
    npm install
+```
 
 ## Configuration
 
 The project uses a configuration object with sensible defaults. You can find the default configuration in `config/defaults.js`:
 
+```javascript
 module.exports = {
   outputFormat: 'wav',
   channels: 2,
   sampleRate: 48000
 };
+```
 
 ### Overriding Defaults
 
 You can override the default configuration by passing a configuration object to the `downmix` function. Here’s an example of how to override the defaults:
-
+```javascript
 const { downmix } = require('./src/ffmpegWrapper');
 
 const inputFile = 'path/to/your/input/file.wav';
@@ -56,6 +62,7 @@ downmix(inputFile, options)
   .catch(error => {
     console.error(error);
   });
+```
 
 ## Usage
 
@@ -66,12 +73,12 @@ An example Dolby Atmos WAV file can be downloaded from the following link: Downl
 ### Running the Tests
 
 The project includes unit tests using Jest. To run the tests, use the following command:
-
+```sh
 npm test
-
+```
 ### Project Structure
 
-
+```sh
 .
 ├── README.md
 ├── SPEC.md
@@ -88,17 +95,17 @@ npm test
 │   └── server.js
 └── test
     └── ffmpegWrapper.test.js
-
+```
 
 
 ## FFmpeg 7.x Requirements
 
 Ensure FFmpeg 7.x is installed and properly configured on your system. Here’s a quick way to verify your FFmpeg installation:
-
+```sh
 ffmpeg -version
-
+```
 ### Sample Output
-
+```sh
 ffmpeg version 7.0.1 Copyright (c) 2000-2024 the FFmpeg developers
   built with Apple clang version 15.0.0 (clang-1500.3.9.4)
   configuration: --prefix=/opt/homebrew/Cellar/ffmpeg/7.0.1 ...
@@ -110,7 +117,7 @@ ffmpeg version 7.0.1 Copyright (c) 2000-2024 the FFmpeg developers
   libswscale      8. 1.100 / 8. 1.100
   libswresample   5. 1.100 / 5. 1.100
   libpostproc    58. 1.100 / 58. 1.100
-
+```
 ## License
 
 This project is licensed under the MIT License. See the LICENSE file for details.
