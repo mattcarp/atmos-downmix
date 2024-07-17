@@ -23,9 +23,9 @@
 
    git clone https://github.com/mattcarp/atmos-downmix.git
    cd atmos-downmix
-
+```
 2. Install the dependencies:
-
+```sh
    npm install
 ```
 
@@ -86,8 +86,6 @@ npm test
 │   └── defaults.js
 ├── media
 │   └── output
-├── output.mp3
-├── output.wav
 ├── package-lock.json
 ├── package.json
 ├── src
