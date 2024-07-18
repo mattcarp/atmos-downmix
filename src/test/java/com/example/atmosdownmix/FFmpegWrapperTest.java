@@ -20,15 +20,17 @@ public class FFmpegWrapperTest {
         File inputFile = new File(INPUT_FILE);
         System.out.println("Checking input file: " + inputFile.getAbsolutePath());
         assertTrue(inputFile.exists(), "Input file should exist");
-    }
 
-    @AfterAll
-    public static void cleanup() {
-        // Clean up the output file after tests
+        // Delete the output file if it exists to ensure a clean test run
         File outputFile = new File(OUTPUT_FILE);
         if (outputFile.exists()) {
             outputFile.delete();
         }
+    }
+
+    @AfterAll
+    public static void cleanup() {
+        // No cleanup to keep the output file for review
     }
 
     @Test
