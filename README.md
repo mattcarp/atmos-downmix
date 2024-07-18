@@ -1,6 +1,6 @@
 # atmos-downmix
 
-`atmos-downmix` is a project for downmixing Dolby Atmos files using FFmpeg, supporting both Node.js and Java. This tool allows you to downmix Dolby Atmos files to stereo with sensible defaults and provides options for configuration overrides. It supports WAV files and can be extended to other formats.
+`atmos-downmix` is a project for downmixing Dolby Atmos files using FFmpeg, primarily designed for Java developers but also supporting Node.js. This tool allows you to downmix Dolby Atmos files to stereo with sensible defaults and provides options for configuration overrides. It supports WAV files and can be extended to other formats.
 
 ## Features
 
@@ -11,31 +11,16 @@
 
 ## Prerequisites
 
-- **Node.js**: Ensure you have Node.js installed. You can download it from the [Node.js official website](https://nodejs.org/).
-- **FFmpeg 7.x**: Make sure FFmpeg 7.x is installed on your system. You can download and install it from the [FFmpeg official website](https://ffmpeg.org/download.html).
 - **Java**: Ensure you have Java installed. You can download it from the [Oracle official website](https://www.oracle.com/java/technologies/javase-downloads.html).
 - **Maven**: Ensure you have Maven installed. You can download it from the [Maven official website](https://maven.apache.org/download.cgi).
+- **Node.js**: Ensure you have Node.js installed. You can download it from the [Node.js official website](https://nodejs.org/).
+- **FFmpeg 7.x**: Make sure FFmpeg 7.x is installed on your system. You can download and install it from the [FFmpeg official website](https://ffmpeg.org/download.html).
 
 ## Installation
 
-### Node.js
-
-1. Clone the repository:
-
-    ```sh
-    git clone https://github.com/mattcarp/atmos-downmix.git
-    cd atmos-downmix
-    ```
-
-2. Install the Node.js dependencies:
-
-    ```sh
-    pnpm install
-    ```
-
 ### Java
 
-1. Clone the repository (if not already done):
+1. Clone the repository:
 
     ```sh
     git clone https://github.com/mattcarp/atmos-downmix.git
@@ -46,6 +31,21 @@
 
     ```sh
     mvn install
+    ```
+
+### Node.js
+
+1. Clone the repository (if not already done):
+
+    ```sh
+    git clone https://github.com/mattcarp/atmos-downmix.git
+    cd atmos-downmix
+    ```
+
+2. Install the Node.js dependencies:
+
+    ```sh
+    pnpm install
     ```
 
 ## Configuration
@@ -86,20 +86,20 @@ downmix(inputFile, options)
 
 ## Usage
 
-### Running the Node.js Application
-
-To run the Node.js application, use the following command:
-
-```sh
-node src/server.js
-```
-
 ### Running the Java Application
 
 To run the Java application, use the following command:
 
 ```sh
 mvn exec:java -Dexec.mainClass="com.yourpackage.MainClass"
+```
+
+### Running the Node.js Application
+
+To run the Node.js application, use the following command:
+
+```sh
+node src/server.js
 ```
 
 ### Running the Tests
