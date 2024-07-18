@@ -1,6 +1,6 @@
 # atmos-downmix
 
-`atmos-downmix` is a Node.js project for downmixing Dolby Atmos files using FFmpeg. This tool allows you to downmix Dolby Atmos files to stereo with sensible defaults and provides options for configuration overrides. It supports WAV files and can be extended to other formats.
+`atmos-downmix` is a project for downmixing Dolby Atmos files using FFmpeg, supporting both Node.js and Java. This tool allows you to downmix Dolby Atmos files to stereo with sensible defaults and provides options for configuration overrides. It supports WAV files and can be extended to other formats.
 
 ## Features
 
@@ -11,23 +11,42 @@
 
 ## Prerequisites
 
-- **Node.js**: Ensure you have Node.js installed. You can download it from Node.js official website (https://nodejs.org/).
-- **FFmpeg 7.x**: Make sure FFmpeg 7.x is installed on your system. You can download and install it from FFmpeg official website (https://ffmpeg.org/download.html).
+- **Node.js**: Ensure you have Node.js installed. You can download it from the [Node.js official website](https://nodejs.org/).
+- **FFmpeg 7.x**: Make sure FFmpeg 7.x is installed on your system. You can download and install it from the [FFmpeg official website](https://ffmpeg.org/download.html).
+- **Java**: Ensure you have Java installed. You can download it from the [Oracle official website](https://www.oracle.com/java/technologies/javase-downloads.html).
+- **Maven**: Ensure you have Maven installed. You can download it from the [Maven official website](https://maven.apache.org/download.cgi).
 
 ## Installation
 
+### Node.js
 
 1. Clone the repository:
 
-```sh
+    ```sh
+    git clone https://github.com/mattcarp/atmos-downmix.git
+    cd atmos-downmix
+    ```
 
-   git clone https://github.com/mattcarp/atmos-downmix.git
-   cd atmos-downmix
-```
-2. Install the dependencies:
-```sh
-   npm install
-```
+2. Install the Node.js dependencies:
+
+    ```sh
+    pnpm install
+    ```
+
+### Java
+
+1. Clone the repository (if not already done):
+
+    ```sh
+    git clone https://github.com/mattcarp/atmos-downmix.git
+    cd atmos-downmix
+    ```
+
+2. Install the Java dependencies:
+
+    ```sh
+    mvn install
+    ```
 
 ## Configuration
 
@@ -43,7 +62,8 @@ module.exports = {
 
 ### Overriding Defaults
 
-You can override the default configuration by passing a configuration object to the `downmix` function. Here’s an example of how to override the defaults:
+You can override the default configuration by passing a configuration object to the `downmix` function. Here's an example of how to override the defaults:
+
 ```javascript
 const { downmix } = require('./src/ffmpegWrapper');
 
@@ -66,16 +86,30 @@ downmix(inputFile, options)
 
 ## Usage
 
-### Example File
+### Running the Node.js Application
 
-An example Dolby Atmos WAV file can be downloaded from the following link: [Download Example File](https://www.dropbox.com/scl/fo/asa4hh8a0r6ppmz063kct/h?rlkey=jv1tet93u4utir3bwa2hjn300&e=1&dl=0)
+To run the Node.js application, use the following command:
+
+```sh
+node src/server.js
+```
+
+### Running the Java Application
+
+To run the Java application, use the following command:
+
+```sh
+mvn exec:java -Dexec.mainClass="com.yourpackage.MainClass"
+```
 
 ### Running the Tests
 
 The project includes unit tests using Jest. To run the tests, use the following command:
+
 ```sh
-npm test
+pnpm test
 ```
+
 ### Project Structure
 
 ```sh
@@ -83,26 +117,28 @@ npm test
 ├── README.md
 ├── SPEC.md
 ├── config
-│   └── defaults.js
+│   └── defaults.js
 ├── media
-│   └── output
+│   └── output
 ├── package-lock.json
 ├── package.json
 ├── src
-│   ├── ffmpegWrapper.js
-│   └── server.js
+│   ├── ffmpegWrapper.js
+│   └── server.js
 └── test
     └── ffmpegWrapper.test.js
 ```
 
-
 ## FFmpeg 7.x Requirements
 
-Ensure FFmpeg 7.x is installed and properly configured on your system. Here’s a quick way to verify your FFmpeg installation:
+Ensure FFmpeg 7.x is installed and properly configured on your system. Here's a quick way to verify your FFmpeg installation:
+
 ```sh
 ffmpeg -version
 ```
+
 ### Sample Output
+
 ```sh
 ffmpeg version 7.0.1 Copyright (c) 2000-2024 the FFmpeg developers
   built with Apple clang version 15.0.0 (clang-1500.3.9.4)
@@ -116,6 +152,7 @@ ffmpeg version 7.0.1 Copyright (c) 2000-2024 the FFmpeg developers
   libswresample   5. 1.100 / 5. 1.100
   libpostproc    58. 1.100 / 58. 1.100
 ```
+
 ## License
 
 This project is licensed under the MIT License. See the LICENSE file for details.
