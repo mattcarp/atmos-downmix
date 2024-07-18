@@ -104,10 +104,32 @@ node src/server.js
 
 ### Running the Tests
 
+#### Running Jest Tests
+
 The project includes unit tests using Jest. To run the tests, use the following command:
 
 ```sh
 pnpm test
+```
+
+#### Running JUnit Tests
+
+To run JUnit tests, use the following commands:
+
+```sh
+mvn test
+```
+
+To run a specific test class:
+
+```sh
+mvn -Dtest=YourTestClass test
+```
+
+To run a specific test method in a class:
+
+```sh
+mvn -Dtest=YourTestClass#yourTestMethod test
 ```
 
 ### Project Structure
