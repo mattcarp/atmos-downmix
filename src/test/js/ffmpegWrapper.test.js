@@ -5,12 +5,12 @@ const fs = require('fs');
 console.log('Current working directory:', process.cwd());
 console.log('Relative path of test file:', __filename);
 try {
-    console.log('Resolved path of the `ffmpegWrapper`:', require.resolve('../../main/javascript/ffmpegWrapper'));
+    console.log('Resolved path of the `ffmpegWrapper`:', require.resolve('../../main/js/ffmpegWrapper'));
 } catch (e) {
     console.error('Error resolving `ffmpegWrapper`:', e);
 }
 
-const { downmix } = require('../../main/javascript/ffmpegWrapper');
+const { downmix } = require('../../main/js/ffmpegWrapper');
 
 describe('FFmpeg Downmix Wrapper', () => {
     const outputDir = path.join(__dirname, '../resources/media/output');
