@@ -7,7 +7,7 @@
 - Downmix Dolby Atmos WAV files to stereo
 - Configurable output format, channels, and sample rate
 - Integration with FFmpeg 7.x for advanced audio processing
-- Unit tests with Jest for robust testing
+- Unit tests with JUnit for Java and Jest for Node.js
 
 ## Prerequisites
 
@@ -50,6 +50,8 @@
 
 ## Configuration
 
+### Default Configuration
+
 The project uses a configuration object with sensible defaults. You can find the default configuration in `config/defaults.js`:
 
 ```javascript
@@ -60,14 +62,36 @@ module.exports = {
 };
 ```
 
-### Overriding Defaults
+### Overriding Defaults in Java
+
+To override the default configuration in Java, you can pass a configuration object to the `downmix` function. Here's an example of how to override the defaults:
+
+```java
+import com.yourpackage.Downmixer;
+
+// Create a new Downmixer instance
+Downmixer downmixer = new Downmixer();
+
+// Set the configuration options
+DownmixerConfig config = new DownmixerConfig();
+config.setOutputFormat("mp3");
+config.setChannels(1);
+config.setSampleRate(44100);
+
+// Downmix the file
+String inputFile = "src/test/resources/media/The Visitor at the Window2_atmos.wav";
+String outputFile = "path/to/your/output/file.mp3";
+downmixer.downmix(inputFile, config, outputFile);
+```
+
+### Overriding Defaults in Node.js
 
 You can override the default configuration by passing a configuration object to the `downmix` function. Here's an example of how to override the defaults:
 
 ```javascript
 const { downmix } = require('./src/ffmpegWrapper');
 
-const inputFile = 'path/to/your/input/file.wav';
+const inputFile = 'src/test/resources/media/The Visitor at the Window2_atmos.wav';
 const options = {
   outputFormat: 'mp3',
   channels: 1,
