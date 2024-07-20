@@ -10,12 +10,12 @@ import java.io.IOException;
 
 public class FFmpegWrapper {
 
-    public String downmix(String inputFile, String outputFile) throws IOException {
+    public String downmix(String inputFile, String outputFile, DownmixConfig config) throws IOException {
         CommandLine cmdLine = new CommandLine("ffmpeg");
         cmdLine.addArgument("-i");
         cmdLine.addArgument(inputFile, false); // Ensure the input file path is not quoted
         cmdLine.addArgument("-ac");
-        cmdLine.addArgument("2");
+        cmdLine.addArgument(String.valueOf(config.getChannels()));
         cmdLine.addArgument(outputFile, false); // Ensure the output file path is not quoted
 
         DefaultExecutor executor = new DefaultExecutor();
@@ -38,8 +38,9 @@ public class FFmpegWrapper {
 
     public static void main(String[] args) {
         FFmpegWrapper wrapper = new FFmpegWrapper();
+        DownmixConfig config = new DownmixConfig(); // Load default config
         try {
-            String result = wrapper.downmix("input.wav", "output.wav");
+            String result = wrapper.downmix("input.wav", "output.wav", config);
             System.out.println("Downmix result: " + result);
         } catch (IOException e) {
             e.printStackTrace();
