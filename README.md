@@ -11,10 +11,22 @@
 
 ## Prerequisites
 
+### Java
+
 - **Java**: Ensure you have Java installed. You can download it from the [Oracle official website](https://www.oracle.com/java/technologies/javase-downloads.html).
 - **Maven**: Ensure you have Maven installed. You can download it from the [Maven official website](https://maven.apache.org/download.cgi).
+
+### JavaScript
+
 - **Node.js**: Ensure you have Node.js installed. You can download it from the [Node.js official website](https://nodejs.org/).
-- **FFmpeg 7.x**: Make sure FFmpeg 7.x is installed on your system. You can download and install it from the [FFmpeg official website](https://ffmpeg.org/download.html).
+- **pnpm**: Ensure you have pnpm installed. You can install it using npm:
+    ```sh
+    npm install -g pnpm
+    ```
+
+### FFmpeg 7.x
+
+Make sure FFmpeg 7.x is installed on your system. You can download and install it from the [FFmpeg official website](https://ffmpeg.org/download.html).
 
 ## Installation
 
@@ -33,7 +45,7 @@
     mvn install
     ```
 
-### Node.js
+### JavaScript
 
 1. Clone the repository (if not already done):
 
@@ -89,7 +101,7 @@ public class Main {
 }
 ```
 
-### Overriding Defaults in Node.js
+### Overriding Defaults in JavaScript
 
 You can override the default configuration by passing a configuration object to the `downmix` function. Here's an example of how to override the defaults:
 
@@ -163,7 +175,7 @@ mvn -Dtest=YourTestClass#yourTestMethod test
 
 ### Project Structure
 
-```sh
+```plaintext
 .
 ├── README.md
 ├── SPEC.md
@@ -173,9 +185,60 @@ mvn -Dtest=YourTestClass#yourTestMethod test
 │   └── output
 ├── package-lock.json
 ├── package.json
+├── pom.xml
 ├── src
-│   ├── ffmpegWrapper.js
-│   └── server.js
+│   ├── main
+│   │   ├── java
+│   │   │   └── com
+│   │   │       └── mediaconsensus
+│   │   │           └── downmix
+│   │   │               └── atmosdownmix
+│   │   │                   └── FFmpegWrapper.java
+│   │   ├── js
+│   │   │   └── ffmpegWrapper.js
+│   │   └── resources
+│   │       ├── config
+│   │       └── media
+│   ├── server.js
+│   └── test
+│       ├── java
+│       │   └── com
+│       │       └── mediaconsensus
+│       │           └── downmix
+│       │               └── atmosdownmix
+│       │                   └── FFmpegWrapperTest.java
+│       ├── js
+│       │   └── ffmpegWrapper.test.js
+│       └── resources
+│           └── media
+├── target
+│   ├── classes
+│   │   ├── com
+│   │   │   ├── example
+│   │   │   └── mediaconsensus
+│   │   ├── config
+│   │   │   └── defaults.yaml
+│   │   └── media
+│   │       └── The Visitor at the Window2_atmos.wav
+│   ├── generated-sources
+│   │   └── annotations
+│   ├── generated-test-sources
+│   │   └── test-annotations
+│   ├── maven-status
+│   │   └── maven-compiler-plugin
+│   │       ├── compile
+│   │       └── testCompile
+│   ├── surefire-reports
+│   │   ├── TEST-com.mediaconsensus.atmosdownmix.FFmpegWrapperTest.xml
+│   │   ├── TEST-com.mediaconsensus.downmix.atmosdownmix.FFmpegWrapperTest.xml
+│   │   ├── com.mediaconsensus.atmosdownmix.FFmpegWrapperTest.txt
+│   │   └── com.mediaconsensus.downmix.atmosdownmix.FFmpegWrapperTest.txt
+│   └── test-classes
+│       ├── com
+│       │   └── mediaconsensus
+│       └── media
+│           ├── The Visitor at the Window2_atmos.wav
+│           └── output.wav
 └── test
     └── ffmpegWrapper.test.js
 ```
