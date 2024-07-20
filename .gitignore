@@ -10,4 +10,3 @@ src/test/resources/media/.gitkeep
 *.wav
 src/test/resources/media/.gitkeep
 target/atmos-downmix-1.0-SNAPSHOT.jar
-target/atmos-downmix-1.0-SNAPSHOT.jar
