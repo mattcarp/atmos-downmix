@@ -1,4 +1,4 @@
-package com.example;
+package com.mediaconsensus.downmix.atmosdownmix;
 
 import org.apache.commons.exec.CommandLine;
 import org.apache.commons.exec.DefaultExecutor;

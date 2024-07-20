@@ -5,7 +5,7 @@
 ## Features
 
 - Downmix Dolby Atmos WAV files to stereo
-- Configurable output format, channels, and sample rate
+- Configurable output format, channels, and bitrate
 - Integration with FFmpeg 7.x for advanced audio processing
 - Unit tests with JUnit for Java and Jest for Node.js
 
@@ -56,9 +56,9 @@ The project uses a configuration object with sensible defaults. You can find the
 
 ```javascript
 module.exports = {
-  outputFormat: 'wav',
+  outputFormat: 'mp3',
   channels: 2,
-  sampleRate: 48000
+  bitrate: 320000 // in bits per second
 };
 ```
 
@@ -67,21 +67,26 @@ module.exports = {
 To override the default configuration in Java, you can pass a configuration object to the `downmix` function. Here's an example of how to override the defaults:
 
 ```java
-import com.yourpackage.Downmixer;
+import com.yourpackage.FfmpegWrapper;
+import java.util.HashMap;
+import java.util.Map;
 
-// Create a new Downmixer instance
-Downmixer downmixer = new Downmixer();
+public class Main {
+    public static void main(String[] args) {
+        String inputFile = "src/test/resources/media/The Visitor at the Window2_atmos.wav";
+        Map<String, Object> options = new HashMap<>();
+        options.put("outputFormat", "wav");
+        options.put("channels", 1);
+        options.put("bitrate", 44100);
+        options.put("output", "path/to/your/output/file.wav");
 
-// Set the configuration options
-DownmixerConfig config = new DownmixerConfig();
-config.setOutputFormat("mp3");
-config.setChannels(1);
-config.setSampleRate(44100);
-
-// Downmix the file
-String inputFile = "src/test/resources/media/The Visitor at the Window2_atmos.wav";
-String outputFile = "path/to/your/output/file.mp3";
-downmixer.downmix(inputFile, config, outputFile);
+        try {
+            FfmpegWrapper.downmix(inputFile, options);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
 ```
 
 ### Overriding Defaults in Node.js
@@ -93,10 +98,10 @@ const { downmix } = require('./src/ffmpegWrapper');
 
 const inputFile = 'src/test/resources/media/The Visitor at the Window2_atmos.wav';
 const options = {
-  outputFormat: 'mp3',
+  outputFormat: 'wav',
   channels: 1,
-  sampleRate: 44100,
-  output: 'path/to/your/output/file.mp3'
+  bitrate: 44100,
+  output: 'path/to/your/output/file.wav'
 };
 
 downmix(inputFile, options)
