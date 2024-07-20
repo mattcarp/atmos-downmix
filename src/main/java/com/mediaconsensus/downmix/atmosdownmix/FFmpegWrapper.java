@@ -1,39 +1,34 @@
 package com.mediaconsensus.downmix.atmosdownmix;
 
-import org.apache.commons.exec.CommandLine;
-import org.apache.commons.exec.DefaultExecutor;
-import org.apache.commons.exec.ExecuteException;
-import org.apache.commons.exec.PumpStreamHandler;
-
-import java.io.ByteArrayOutputStream;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 public class FFmpegWrapper {
 
     public String downmix(String inputFile, String outputFile, DownmixConfig config) throws IOException {
-        CommandLine cmdLine = new CommandLine("ffmpeg");
-        cmdLine.addArgument("-i");
-        cmdLine.addArgument(inputFile, false); // Ensure the input file path is not quoted
-        cmdLine.addArgument("-ac");
-        cmdLine.addArgument(String.valueOf(config.getChannels()));
-        cmdLine.addArgument(outputFile, false); // Ensure the output file path is not quoted
+        List<String> command = new ArrayList<>();
+        command.add("ffmpeg");
+        command.add("-i");
+        command.add(inputFile);
+        command.add("-ac");
+        command.add(String.valueOf(config.getChannels()));
+        command.add("-b:a");
+        command.add(String.valueOf(config.getBitrate()));
+        command.add(outputFile);
 
-        DefaultExecutor executor = new DefaultExecutor();
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        PumpStreamHandler streamHandler = new PumpStreamHandler(outputStream);
-        executor.setStreamHandler(streamHandler);
-
-        System.out.println("Executing FFmpeg command: " + cmdLine.toString());
-
-        try {
-            executor.execute(cmdLine);
-        } catch (ExecuteException e) {
-            System.err.println("Error executing FFmpeg command: " + e.getMessage());
-            System.err.println("FFmpeg output: " + outputStream.toString());
-            throw new IOException("Error executing FFmpeg command", e);
+        ProcessBuilder pb = new ProcessBuilder(command);
+        Process process = pb.start();
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getErrorStream()))) {
+            StringBuilder result = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                result.append(line).append("\n");
+            }
+            return result.toString();
         }
-
-        return outputStream.toString();
     }
 
     public static void main(String[] args) {

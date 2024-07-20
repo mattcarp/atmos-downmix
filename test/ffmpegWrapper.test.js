@@ -1,6 +1,7 @@
 const { downmix } = require('../../src/main/javascript/ffmpegWrapper');
 const path = require('path');
 const fs = require('fs');
+const { execSync } = require('child_process');
 
 describe('FFmpeg Downmix Wrapper', () => {
   const outputDir = path.join(__dirname, '../src/test/resources/media/output');
@@ -12,20 +13,38 @@ describe('FFmpeg Downmix Wrapper', () => {
 
   it('should downmix Dolby Atmos WAV with default settings', async () => {
     const inputFile = path.join(__dirname, '../src/test/resources/media/The Visitor at the Window2_atmos.wav');
-    const outputFile = path.join(outputDir, 'The_Visitor_at_the_Window2_stereo.wav');
-
-    // Add this line to check if the input file exists
-    console.log('Input file exists:', fs.existsSync(inputFile));
+    const outputFile = path.join(outputDir, 'The_Visitor_at_the_Window2_stereo.mp3');
 
     const result = await downmix(`"${inputFile}"`, { output: `"${outputFile}"` });
     console.log('Downmix result:', result);
 
-    // Add this line to check if the output file exists after downmix
-    console.log('Output file exists:', fs.existsSync(outputFile));
+    expect(result).toContain('Success');
+    expect(fs.existsSync(outputFile)).toBe(true);
+
+    // Verify output file attributes using ffprobe
+    verifyOutputFile(outputFile, { outputFormat: 'mp3', channels: 2, bitrate: 320000 });
+  }, 30000); // Increase timeout to 30 seconds
+
+  const verifyOutputFile = (outputFile, config) => {
+    const ffprobeOutput = execSync(`ffprobe -v error -show_entries stream=codec_name,channels,bit_rate -of default=noprint_wrappers=1 "${outputFile}"`).toString();
+    expect(ffprobeOutput).toContain(`codec_name=${config.outputFormat}`);
+    expect(ffprobeOutput).toContain(`channels=${config.channels}`);
+    expect(ffprobeOutput).toContain(`bit_rate=${config.bitrate}`);
+  };
+
+  // Add more tests for different configurations and edge cases
+  it('should downmix with custom settings', async () => {
+    const inputFile = path.join(__dirname, '../src/test/resources/media/The Visitor at the Window2_atmos.wav');
+    const outputFile = path.join(outputDir, 'The_Visitor_at_the_Window2_custom.mp3');
+
+    const customConfig = { outputFormat: 'mp3', channels: 1, bitrate: 128000 };
+    const result = await downmix(`"${inputFile}"`, { output: `"${outputFile}"`, ...customConfig });
+    console.log('Downmix result:', result);
 
     expect(result).toContain('Success');
     expect(fs.existsSync(outputFile)).toBe(true);
-  }, 30000); // Increase timeout to 30 seconds
 
-  // Existing test cases for AAC and EC3 files can remain as is
+    // Verify output file attributes using ffprobe
+    verifyOutputFile(outputFile, customConfig);
+  }, 30000); // Increase timeout to 30 seconds
 });
