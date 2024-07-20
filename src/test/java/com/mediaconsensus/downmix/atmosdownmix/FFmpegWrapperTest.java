@@ -1,4 +1,4 @@
-package com.example;
+package com.mediaconsensus.downmix.atmosdownmix;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -38,8 +38,6 @@ public class FFmpegWrapperTest {
         FFmpegWrapper wrapper = new FFmpegWrapper();
         String result = wrapper.downmix(INPUT_FILE, OUTPUT_FILE);
         System.out.println("Downmix result: " + result);
-
-        File outputFile = new File(OUTPUT_FILE);
-        assertTrue(outputFile.exists(), "Output file should exist");
+        assertTrue(new File(OUTPUT_FILE).exists(), "Output file should exist");
     }
 }
