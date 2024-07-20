@@ -8,3 +8,5 @@ media/
 **/.DS_Storesrc/test/resources/media/output.wav
 src/test/resources/media/.gitkeep
 *.wav
+*.wav
+src/test/resources/media/.gitkeep
