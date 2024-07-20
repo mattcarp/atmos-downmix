@@ -8,6 +8,7 @@
 - Configurable output format, channels, and bitrate
 - Integration with FFmpeg 7.x for advanced audio processing
 - Unit tests with JUnit for Java and Jest for Node.js
+- Enhanced tests to verify output file attributes using `ffprobe`
 
 ## Prerequisites
 
@@ -173,6 +174,18 @@ To run a specific test method in a class:
 ```sh
 mvn -Dtest=YourTestClass#yourTestMethod test
 ```
+
+### Enhanced Tests
+
+The tests have been enhanced to verify the output file attributes using `ffprobe`. This ensures that the output file meets the expected format, number of channels, and bitrate.
+
+#### Java Tests
+
+The Java tests use `ffprobe` to verify the output file attributes, including the format, number of channels, and bitrate. This ensures that the output file meets the expected configuration.
+
+#### JavaScript Tests
+
+The JavaScript tests also use `ffprobe` to verify the output file attributes, including the format, number of channels, and bitrate. This ensures that the output file meets the expected configuration.
 
 ### Project Structure
 
