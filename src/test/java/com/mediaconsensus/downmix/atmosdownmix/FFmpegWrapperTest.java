@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class FFmpegWrapperTest {
 
     private static final String INPUT_FILE = "src/test/resources/media/The Visitor at the Window2_atmos.wav";
-    private static final String OUTPUT_FILE = "src/test/resources/media/output.wav";
+    private static final String OUTPUT_FILE = "src/test/resources/media/output.mp3";
 
     @BeforeAll
     public static void setup() {
@@ -28,16 +28,17 @@ public class FFmpegWrapperTest {
         }
     }
 
-    @AfterAll
-    public static void cleanup() {
-        // No cleanup to keep the output file for review
-    }
-
     @Test
     public void testDownmix() throws IOException {
         FFmpegWrapper wrapper = new FFmpegWrapper();
-        String result = wrapper.downmix(INPUT_FILE, OUTPUT_FILE);
+        DownmixConfig config = new DownmixConfig(); // Use default config
+        String result = wrapper.downmix(INPUT_FILE, OUTPUT_FILE, config);
         System.out.println("Downmix result: " + result);
         assertTrue(new File(OUTPUT_FILE).exists(), "Output file should exist");
+    }
+
+    @AfterAll
+    public static void cleanup() {
+        // No cleanup to keep the output file for review
     }
 }

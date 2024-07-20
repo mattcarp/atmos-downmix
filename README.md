@@ -79,22 +79,23 @@ module.exports = {
 To override the default configuration in Java, you can pass a configuration object to the `downmix` function. Here's an example of how to override the defaults:
 
 ```java
-import com.yourpackage.FfmpegWrapper;
-import java.util.HashMap;
-import java.util.Map;
+import com.mediaconsensus.downmix.atmosdownmix.DownmixConfig;
+import com.mediaconsensus.downmix.atmosdownmix.FFmpegWrapper;
 
 public class Main {
     public static void main(String[] args) {
         String inputFile = "src/test/resources/media/The Visitor at the Window2_atmos.wav";
-        Map<String, Object> options = new HashMap<>();
-        options.put("outputFormat", "wav");
-        options.put("channels", 1);
-        options.put("bitrate", 44100);
-        options.put("output", "path/to/your/output/file.wav");
+        DownmixConfig config = new DownmixConfig();
+        config.setOutputFormat("mp3");
+        config.setChannels(2);
+        config.setBitrate(320000);
+        String outputFile = "path/to/your/output/file.mp3";
 
         try {
-            FfmpegWrapper.downmix(inputFile, options);
-        } catch (Exception e) {
+            FFmpegWrapper wrapper = new FFmpegWrapper();
+            String result = wrapper.downmix(inputFile, outputFile, config);
+            System.out.println(result);
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -193,6 +194,7 @@ mvn -Dtest=YourTestClass#yourTestMethod test
 │   │   │       └── mediaconsensus
 │   │   │           └── downmix
 │   │   │               └── atmosdownmix
+│   │   │                   ├── DownmixConfig.java
 │   │   │                   └── FFmpegWrapper.java
 │   │   ├── js
 │   │   │   └── ffmpegWrapper.js
