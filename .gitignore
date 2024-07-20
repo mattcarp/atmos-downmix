@@ -5,4 +5,5 @@ node_modules/
 coverage/
 media/
 !media/.gitkeep
-**/.DS_Store
+**/.DS_Storesrc/test/resources/media/output.wav
+src/test/resources/media/.gitkeep
