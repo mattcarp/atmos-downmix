@@ -36,6 +36,15 @@ jobs:
     - name: Install Java dependencies
       run: mvn install
 
+    - name: Install FFmpeg 7.0.1
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y wget
+        wget https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-64bit-static.tar.xz
+        tar -xJf ffmpeg-release-64bit-static.tar.xz
+        sudo mv ffmpeg-7.0.1-64bit-static/ffmpeg /usr/local/bin/ffmpeg
+        sudo mv ffmpeg-7.0.1-64bit-static/ffprobe /usr/local/bin/ffprobe
+
     - name: Run Java tests
       run: mvn test
 
