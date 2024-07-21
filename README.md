@@ -8,7 +8,6 @@
 - Configurable output format, channels, and bitrate
 - Integration with FFmpeg 7.x for advanced audio processing
 - Unit tests with JUnit for Java and Jest for Node.js
-- Enhanced tests to verify output file attributes using `ffprobe`
 
 ## Prerequisites
 
@@ -134,7 +133,7 @@ downmix(inputFile, options)
 To run the Java application, use the following command:
 
 ```sh
-mvn exec:java -Dexec.mainClass="com.yourpackage.MainClass"
+mvn exec:java -Dexec.mainClass="com.mediaconsensus.downmix.atmosdownmix.FFmpegWrapper"
 ```
 
 ### Running the Node.js Application
@@ -174,18 +173,6 @@ To run a specific test method in a class:
 ```sh
 mvn -Dtest=YourTestClass#yourTestMethod test
 ```
-
-### Enhanced Tests
-
-The tests have been enhanced to verify the output file attributes using `ffprobe`. This ensures that the output file meets the expected format, number of channels, and bitrate.
-
-#### Java Tests
-
-The Java tests use `ffprobe` to verify the output file attributes, including the format, number of channels, and bitrate. This ensures that the output file meets the expected configuration.
-
-#### JavaScript Tests
-
-The JavaScript tests also use `ffprobe` to verify the output file attributes, including the format, number of channels, and bitrate. This ensures that the output file meets the expected configuration.
 
 ### Project Structure
 
@@ -284,7 +271,7 @@ ffmpeg version 7.0.1 Copyright (c) 2000-2024 the FFmpeg developers
 
 ## License
 
-This project is licensed under the MIT License. See the LICENSE file for details.
+This project is licensed under the ISC License. See the LICENSE file for details.
 
 ## Contributing
 
