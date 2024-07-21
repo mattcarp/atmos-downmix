@@ -37,12 +37,15 @@ jobs:
       run: mvn install
 
     - name: Setup FFmpeg 7.0.1
-      uses: FedericoCarboni/setup-ffmpeg@v3
+      uses: federicocarboni/setup-ffmpeg@v3
       with:
         ffmpeg-version: '7.0.1'
 
     - name: Run Java tests
       run: mvn test
+
+    - name: Display logs
+      run: cat /home/runner/work/atmos-downmix/atmos-downmix/target/surefire-reports/*.txt
 
     - name: Run JavaScript tests
       run: pnpm test
