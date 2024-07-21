@@ -42,7 +42,10 @@ jobs:
         ffmpeg-version: '7.0.1'
 
     - name: Verify FFmpeg installation
-      run: ffmpeg -version
+      run: |
+        ffmpeg -version
+        which ffmpeg
+        ls -l /usr/local/bin/ffmpeg
 
     - name: Run Java tests
       run: mvn test -X
