@@ -42,9 +42,9 @@ jobs:
         ffmpeg-version: '7.0.1'
 
     - name: Run Java tests
-      run: mvn test
+      run: mvn test -X
 
-    - name: Display logs
+    - name: Display surefire reports
       run: cat /home/runner/work/atmos-downmix/atmos-downmix/target/surefire-reports/*.txt
 
     - name: Run JavaScript tests
