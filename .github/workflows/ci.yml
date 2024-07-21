@@ -43,9 +43,12 @@ jobs:
 
     - name: Verify FFmpeg installation
       run: |
+        echo "Verifying FFmpeg installation..."
         ffmpeg -version
         which ffmpeg
         ls -l /usr/local/bin/ffmpeg
+        ls -l /usr/bin/ffmpeg
+        echo $PATH
 
     - name: Run Java tests
       run: mvn test -X
