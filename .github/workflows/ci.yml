@@ -41,6 +41,9 @@ jobs:
       with:
         ffmpeg-version: '7.0.1'
 
+    - name: Verify FFmpeg installation
+      run: ffmpeg -version
+
     - name: Run Java tests
       run: mvn test -X
 
