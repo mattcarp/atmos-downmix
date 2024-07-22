@@ -1,6 +1,6 @@
 {
   "name": "atmos-downmix",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "A Node.js wrapper for downmixing Dolby Atmos files using FFmpeg",
   "main": "src/main/javascript/index.js",
   "scripts": {
