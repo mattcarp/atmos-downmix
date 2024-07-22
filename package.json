@@ -1,10 +1,12 @@
 {
   "name": "atmos-downmix",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "A Node.js wrapper for downmixing Dolby Atmos files using FFmpeg",
   "main": "src/main/javascript/index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "prepare": "husky install",
+    "release": "standard-version"
   },
   "keywords": [
     "dolby",
@@ -21,6 +23,8 @@
   "devDependencies": {
     "@builder.io/micro-agent": "^0.1.5",
     "child_process": "^1.0.2",
-    "jest": "^29.7.0"
+    "husky": "^9.1.1",
+    "jest": "^29.7.0",
+    "standard-version": "^9.5.0"
   }
 }
