@@ -37,5 +37,7 @@
       "section": "Tests"
     }
   ],
-  "changelog-type": "default"
+  "changelog-type": "default",
+  "include-commit-message": true,
+  "include-commit-timestamp": true
 }

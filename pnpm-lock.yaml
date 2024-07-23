@@ -4,6 +4,9 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+overrides:
+  husky: ^9.1.1
+
 importers:
 
   .:
@@ -19,7 +22,7 @@ importers:
         specifier: ^1.0.2
         version: 1.0.2
       husky:
-        specifier: ^9.1.1
+        specifier: 9.1.1
         version: 9.1.1
       jest:
         specifier: ^29.7.0
