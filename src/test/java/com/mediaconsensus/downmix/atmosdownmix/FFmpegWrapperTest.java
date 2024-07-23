@@ -53,16 +53,16 @@ public class FFmpegWrapperTest {
 
             while ((line = reader.readLine()) != null) {
                 System.out.println("ffprobe output: " + line);
-                if (line.contains("codec_name=")) {
-                    formatVerified = line.contains(config.getOutputFormat());
-                } else if (line.contains("channels=")) {
-                    channelsVerified = line.contains(String.valueOf(config.getChannels()));
-                } else if (line.contains("bit_rate=")) {
-                    bitrateVerified = line.contains(String.valueOf(config.getBitrate()));
+                if (line.contains("codec_name=mp3")) {
+                    formatVerified = true;
+                } else if (line.contains("channels=" + config.getChannels())) {
+                    channelsVerified = true;
+                } else if (line.contains("bit_rate=" + config.getBitrate())) {
+                    bitrateVerified = true;
                 }
             }
 
-            assertTrue(formatVerified, "Output format should be " + config.getOutputFormat());
+            assertTrue(formatVerified, "Output format should be mp3");
             assertTrue(channelsVerified, "Channels should be " + config.getChannels());
             assertTrue(bitrateVerified, "Bitrate should be " + config.getBitrate());
         }

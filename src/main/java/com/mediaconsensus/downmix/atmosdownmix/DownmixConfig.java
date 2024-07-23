@@ -3,7 +3,7 @@ package com.mediaconsensus.downmix.atmosdownmix;
 public class DownmixConfig {
     private String outputFormat = "mp3";
     private int channels = 2;
-    private int bitrate = 320000; // in bits per second
+    private int bitrate = 128000; // in bits per second
 
     // Getters and setters
     public String getOutputFormat() {

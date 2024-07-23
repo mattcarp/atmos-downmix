@@ -21,7 +21,7 @@ describe('FFmpeg Downmix Wrapper', () => {
     });
 
     afterAll(() => {
-        const outputFile = path.join(outputDir, 'The_Visitor_at_the_Window2_stereo.wav');
+        const outputFile = path.join(outputDir, 'The_Visitor_at_the_Window2_stereo.mp3');
         if (fs.existsSync(outputFile)) {
             fs.unlinkSync(outputFile);
         }
@@ -29,7 +29,7 @@ describe('FFmpeg Downmix Wrapper', () => {
 
     it('should downmix Dolby Atmos WAV with default settings', async () => {
         const inputFile = path.join(__dirname, '../resources/media/The Visitor at the Window2_atmos.wav');
-        const outputFile = path.join(outputDir, 'The_Visitor_at_the_Window2_stereo.wav');
+        const outputFile = path.join(outputDir, 'The_Visitor_at_the_Window2_stereo.mp3');
 
         // Add this line to check if the input file exists
         console.log('Input file exists:', fs.existsSync(inputFile));

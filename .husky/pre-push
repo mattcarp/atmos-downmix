@@ -1,11 +1,25 @@
 #!/bin/sh
+set -e  # Exit immediately if a command exits with a non-zero status.
+set -x  # Print commands and their arguments as they are executed.
+
+# Debug: Echo the current directory and the path to husky.sh
+echo "Current directory: $(pwd)"
+echo "Path to husky.sh: $(dirname "$0")/_/husky.sh"
+
+# Source the husky.sh file
 . "$(dirname "$0")/_/husky.sh"
+
+# Check if GITHUB_TOKEN is set
+if [ -z "$GITHUB_TOKEN" ]; then
+  echo "Error: GITHUB_TOKEN is not set."
+  exit 1
+fi
 
 # Run tests
 pnpm test
 
 # Create a release
-pnpm release
+pnpm exec release-please release-pr --token $GITHUB_TOKEN --repo-url "https://github.com/mattcarp/atmos-downmix.git"
 
 # Push changes and tags
 git push --follow-tags origin main || git push --set-upstream origin main --follow-tags
