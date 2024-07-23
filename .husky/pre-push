@@ -1,1 +1,11 @@
-pnpm test && pnpm release && git push --follow-tags
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+# Run tests
+pnpm test
+
+# Create a release
+pnpm release
+
+# Push changes and tags
+git push --follow-tags origin main || git push --set-upstream origin main --follow-tags
