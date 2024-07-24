@@ -1,4 +1,28 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
+echo "Running pre-push hook" >> ./logs/pre-push.log 2>&1
 
-pnpm test
+# Debugging: Log the current directory and environment variables
+echo "Current directory: $(pwd)" >> ./logs/pre-push.log 2>&1
+echo "Environment variables:" >> ./logs/pre-push.log 2>&1
+env >> ./logs/pre-push.log 2>&1
+
+# Load environment variables from .env file
+if [ -f .env ]; then
+  export $(cat .env | xargs)
+fi
+
+# Run tests
+pnpm test >> ./logs/pre-push.log 2>&1
+
+# Update changelog if on main branch
+branch=$(git rev-parse --abbrev-ref HEAD)
+echo "Current branch: $branch" >> ./logs/pre-push.log 2>&1
+if [ "$branch" = "main" ]; then
+  echo "Updating changelog..." >> ./logs/pre-push.log 2>&1
+  pnpm run update-changelog >> ./logs/pre-push.log 2>&1
+  git add CHANGELOG.md >> ./logs/pre-push.log 2>&1
+  git commit -m "Update changelog" >> ./logs/pre-push.log 2>&1
+fi
+
+echo "Completed pre-push hook" >> ./logs/pre-push.log 2>&1
