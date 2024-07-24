@@ -27,11 +27,8 @@ jobs:
       with:
         node-version: '14'
 
-    - name: Install pnpm
-      run: npm install -g pnpm
-
     - name: Install JavaScript dependencies
-      run: pnpm install
+      run: npm install
 
     - name: Install Java dependencies
       run: mvn install
@@ -57,4 +54,4 @@ jobs:
       run: cat /home/runner/work/atmos-downmix/atmos-downmix/target/surefire-reports/*.txt
 
     - name: Run JavaScript tests
-      run: pnpm test
+      run: npm test
