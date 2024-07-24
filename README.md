@@ -285,3 +285,6 @@ Contributions are welcome! Please open an issue or submit a pull request with yo
 ## Author
 
 This tool is written by Matt Carpenter.# Minor change
+
+
+<!-- Trivial change for testing pre-push hook -->
