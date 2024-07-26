@@ -5,6 +5,10 @@ on:
     branches:
       - main
 
+permissions:
+  contents: write
+  pull-requests: write
+
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -21,7 +25,7 @@ jobs:
         run: pnpm install
 
       - name: Run release-please
-        run: pnpm run release
+        run: pnpm release-please release-pr --token=${{ secrets.GITHUB_TOKEN }} --repo-url=${{ github.repository }} --debug
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REPO_URL: ${{ github.repository }}
