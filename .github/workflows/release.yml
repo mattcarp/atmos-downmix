@@ -22,10 +22,10 @@ jobs:
           node-version: '20'
 
       - name: Install dependencies
-        run: pnpm install
+        run: npm install
 
       - name: Run release-please
-        run: pnpm release-please release-pr --token=${{ secrets.GITHUB_TOKEN }} --repo-url=${{ github.repository }} --debug
+        run: npm release-please release-pr --token=${{ secrets.GITHUB_TOKEN }} --repo-url=${{ github.repository }} --debug
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REPO_URL: ${{ github.repository }}

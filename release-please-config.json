@@ -10,48 +10,17 @@
     }
   },
   "changelog-sections": [
-    {
-      "type": "feat",
-      "section": "Features"
-    },
-    {
-      "type": "fix",
-      "section": "Bug Fixes"
-    },
-    {
-      "type": "chore",
-      "section": "Chores"
-    },
-    {
-      "type": "docs",
-      "section": "Documentation"
-    },
-    {
-      "type": "style",
-      "section": "Styles"
-    },
-    {
-      "type": "refactor",
-      "section": "Code Refactoring"
-    },
-    {
-      "type": "perf",
-      "section": "Performance Improvements"
-    },
-    {
-      "type": "test",
-      "section": "Tests"
-    }
+    { "type": "feat", "section": "Features" },
+    { "type": "fix", "section": "Bug Fixes" },
+    { "type": "chore", "section": "Chores" },
+    { "type": "docs", "section": "Documentation" },
+    { "type": "style", "section": "Styles" },
+    { "type": "refactor", "section": "Code Refactoring" },
+    { "type": "perf", "section": "Performance Improvements" },
+    { "type": "test", "section": "Tests" }
   ],
   "changelog-type": "default",
   "include-commit-message": true,
   "include-commit-timestamp": true,
-  "branches": [
-    "main"
-  ],
-  "plugins": [
-    {
-      "type": "node-workspace"
-    }
-  ]
+  "branches": ["main"]
 }

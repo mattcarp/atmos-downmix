@@ -1,11 +1,3 @@
 {
-  "packages": {
-    ".": {
-      "release-type": "node",
-      "version-file": "package.json",
-      "bump-minor-pre-major": true,
-      "bump-patch-for-minor-pre-major": true,
-      "changelog-path": "CHANGELOG.md"
-    }
-  }
+  ".": "0.0.14"
 }
