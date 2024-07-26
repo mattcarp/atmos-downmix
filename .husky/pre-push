@@ -1,28 +1,69 @@
 #!/bin/sh
-. "$(dirname "$0")/_/husky.sh"
-echo "Running pre-push hook" >> ./logs/pre-push.log 2>&1
 
-# Debugging: Log the current directory and environment variables
-echo "Current directory: $(pwd)" >> ./logs/pre-push.log 2>&1
-echo "Environment variables:" >> ./logs/pre-push.log 2>&1
-env >> ./logs/pre-push.log 2>&1
+# Function to log with timestamps
+log() {
+  echo "$(date '+%Y-%m-%d %H:%M:%S') $1" >> .husky/logs/pre-push.log
+}
 
-# Load environment variables from .env file
-if [ -f .env ]; then
-  export $(cat .env | xargs)
+# Log the current directory and the directory of the husky.sh file
+log "Running pre-push hook"
+log "Current directory: $(pwd)"
+log "Script directory: $(dirname "$0")"
+log "Expected husky.sh path: $(dirname "$0")/../husky.sh"
+
+# Prevent sourcing husky.sh multiple times
+if [ -z "$HUSKY_SOURCED" ]; then
+  export HUSKY_SOURCED=1
+  # Attempt to source the husky.sh file
+  if [ -f "$(dirname "$0")/../husky.sh" ]; then
+    log "Sourcing husky.sh"
+    . "$(dirname "$0")/../husky.sh"
+    log "Successfully sourced husky.sh"
+  else
+    log "Failed to source husky.sh"
+    exit 1
+  fi
+else
+  log "husky.sh already sourced, skipping"
 fi
 
+# Debugging: Log the current directory and environment variables
+log "Environment variables:"
+env >> .husky/logs/pre-push.log 2>&1
+
+# Load environment variables
+if [ -f .env ]; then
+  export $(grep -v '^#' .env | xargs)
+fi
+
+# Verify environment variables
+log "GITHUB_TOKEN: $GITHUB_TOKEN"
+log "REPO_URL: $REPO_URL"
+
 # Run tests
-pnpm test >> ./logs/pre-push.log 2>&1
+log "Running tests..."
+pnpm test >> .husky/logs/pre-push.log 2>&1
+if [ $? -ne 0 ]; then
+  log "Tests failed"
+  exit 1
+fi
 
 # Update changelog if on main branch
 branch=$(git rev-parse --abbrev-ref HEAD)
-echo "Current branch: $branch" >> ./logs/pre-push.log 2>&1
+log "Current branch: $branch"
 if [ "$branch" = "main" ]; then
-  echo "Updating changelog..." >> ./logs/pre-push.log 2>&1
-  pnpm run update-changelog >> ./logs/pre-push.log 2>&1
-  git add CHANGELOG.md >> ./logs/pre-push.log 2>&1
-  git commit -m "Update changelog" >> ./logs/pre-push.log 2>&1
+  log "Updating changelog..."
+  pnpm run update-changelog >> .husky/logs/pre-push.log 2>&1
+  if [ $? -ne 0 ]; then
+    log "Failed to update changelog"
+    exit 1
+  fi
+  git add CHANGELOG.md >> .husky/logs/pre-push.log 2>&1
+  git commit -m "Update changelog" >> .husky/logs/pre-push.log 2>&1 || log "No changes to commit"
+  git push >> .husky/logs/pre-push.log 2>&1
 fi
 
-echo "Completed pre-push hook" >> ./logs/pre-push.log 2>&1
+# Run release-please
+pnpm release-please release-pr --token=$GITHUB_TOKEN --repo-url=$REPO_URL --debug
+log "Completed pre-push hook"
+exit 0
