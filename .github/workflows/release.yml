@@ -30,3 +30,4 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           release-type: node
           repo-url: ${{ github.repository }}
+          changelog-path: CHANGELOG.md

@@ -15,7 +15,7 @@ console.log('REPO_URL:', REPO_URL);
 
 try {
   // Ensure the command is a string
-  const command = `pnpm release-please release-pr --token=${GITHUB_TOKEN} --repo-url=${REPO_URL} --debug`;
+  const command = `pnpm release-please release-pr --token=${GITHUB_TOKEN} --repo-url=${REPO_URL}`;
   if (typeof command !== 'string') {
     throw new TypeError(`Expected a string but got ${typeof command}`);
   }

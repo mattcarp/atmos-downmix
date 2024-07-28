@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines. -matt carpenter
 
 ### [0.0.13](https://github.com/mattcarp/atmos-downmix/compare/v0.0.11...v0.0.13) (2024-07-23)
 
