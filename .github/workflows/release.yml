@@ -22,10 +22,11 @@ jobs:
           node-version: '20'
 
       - name: Install dependencies
-        run: npm install
+        run: pnpm install
 
       - name: Run release-please
-        run: npm release-please release-pr --token=${{ secrets.GITHUB_TOKEN }} --repo-url=${{ github.repository }} --debug
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          REPO_URL: ${{ github.repository }}
+        uses: google-github-actions/release-please-action@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          release-type: node
+          repo-url: ${{ github.repository }}
