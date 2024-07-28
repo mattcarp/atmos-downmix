@@ -24,10 +24,20 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Run release-please
-        uses: google-github-actions/release-please-action@v4
+      - name: Release Please
+        uses: googleapis/release-please-action@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           release-type: node
-          repo-url: ${{ github.repository }}
-          changelog-path: CHANGELOG.md
+          config-file: release-please-config.json
+          manifest-file: .release-please-manifest.json
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add .
+          git commit -m "chore: bump version and update changelog"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
