@@ -19,10 +19,7 @@
 ### JavaScript
 
 - **Node.js**: Ensure you have Node.js installed. You can download it from the [Node.js official website](https://nodejs.org/).
-- **pnpm**: Ensure you have pnpm installed. You can install it using npm:
-    ```sh
-    npm install -g pnpm
-    ```
+- **npm**: Ensure you have npm installed. It comes bundled with Node.js.
 
 ### FFmpeg 7.x
 
@@ -57,7 +54,7 @@ Make sure FFmpeg 7.x is installed on your system. You can download and install i
 2. Install the Node.js dependencies:
 
     ```sh
-    pnpm install
+    npm install
     ```
 
 ## Configuration
@@ -151,7 +148,7 @@ node src/server.js
 The project includes unit tests using Jest. To run the tests, use the following command:
 
 ```sh
-pnpm test
+npm test
 ```
 
 #### Running JUnit Tests
@@ -200,7 +197,10 @@ mvn -Dtest=YourTestClass#yourTestMethod test
 │   │   │   └── ffmpegWrapper.js
 │   │   └── resources
 │   │       ├── config
+│   │       │   └── defaults.yaml
 │   │       └── media
+│   │           ├── The Visitor at the Window2_atmos.wav
+│   │           └── output
 │   ├── server.js
 │   └── test
 │       ├── java
@@ -213,34 +213,10 @@ mvn -Dtest=YourTestClass#yourTestMethod test
 │       │   └── ffmpegWrapper.test.js
 │       └── resources
 │           └── media
-├── target
-│   ├── classes
-│   │   ├── com
-│   │   │   ├── example
-│   │   │   └── mediaconsensus
-│   │   ├── config
-│   │   │   └── defaults.yaml
-│   │   └── media
-│   │       └── The Visitor at the Window2_atmos.wav
-│   ├── generated-sources
-│   │   └── annotations
-│   ├── generated-test-sources
-│   │   └── test-annotations
-│   ├── maven-status
-│   │   └── maven-compiler-plugin
-│   │       ├── compile
-│   │       └── testCompile
-│   ├── surefire-reports
-│   │   ├── TEST-com.mediaconsensus.atmosdownmix.FFmpegWrapperTest.xml
-│   │   ├── TEST-com.mediaconsensus.downmix.atmosdownmix.FFmpegWrapperTest.xml
-│   │   ├── com.mediaconsensus.atmosdownmix.FFmpegWrapperTest.txt
-│   │   └── com.mediaconsensus.downmix.atmosdownmix.FFmpegWrapperTest.txt
-│   └── test-classes
-│       ├── com
-│       │   └── mediaconsensus
-│       └── media
-│           ├── The Visitor at the Window2_atmos.wav
-│           └── output.wav
+│               ├── HadMeAtHello_VNA0R2300255_Atmos.wav
+│               ├── The Visitor at the Window2_atmos.wav
+│               ├── output
+│               └── output.mp3
 └── test
     └── ffmpegWrapper.test.js
 ```
@@ -269,6 +245,24 @@ ffmpeg version 7.0.1 Copyright (c) 2000-2024 the FFmpeg developers
   libpostproc    58. 1.100 / 58. 1.100
 ```
 
+## Media Test File
+
+To run the tests, you need to download the media test file from the following link and place it in the `src/test/resources/media` directory:
+
+[Download Media Test File](https://www.dropbox.com/scl/fo/asa4hh8a0r6ppmz063kct/h?rlkey=jv1tet93u4utir3bwa2hjn300&e=1&dl=0)
+
+Ensure the file is named `The Visitor at the Window2_atmos.wav` and is placed in the correct directory:
+
+```plaintext
+src
+└── test
+    └── resources
+        └── media
+            └── The Visitor at the Window2_atmos.wav
+```
+
+This file is required for running the unit tests and is ignored by Git using `.gitignore`.
+
 ## License
 
 This project is licensed under the ISC License. See the LICENSE file for details.
@@ -284,18 +278,6 @@ Contributions are welcome! Please open an issue or submit a pull request with yo
 
 ## Author
 
-This tool is written by Matt Carpenter.Trivial change for testing pre-push hook
-Trivial change for testing pre-push hook
-Trivial change for testing pre-push hook
-Trivial change for testing pre-push hook
-Trivial change for testing pre-push hook
-Trivial change for testing pre-push hook
-Trivial change for testing pre-push hook
-Trivial change for testing pre-push hook
-Trivial change for testing pre-push hook
-Trivial change for testing pre-push hook
-Trivial change for testing pre-push hook
-Trivial change for testing pre-push hook
-Trivial change for testing pre-push hook
-Trivial change for testing pre-push hook
-Trivial change for testing pre-push hook
+This tool is written by Matt Carpenter.
+
+<!-- Trivial change to trigger a new commit -->
