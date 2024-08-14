@@ -1,6 +1,7 @@
 package com.mediaconsensus.downmix.atmosdownmix;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -8,16 +9,20 @@ import java.util.List;
 
 public class FFmpegWrapper {
 
+    private String ffmpegCommand = "ffmpeg";
+
+    public void setFfmpegCommand(String ffmpegCommand) {
+        this.ffmpegCommand = ffmpegCommand;
+    }
+
     public String downmix(String inputFile, String outputFile, DownmixConfig config) throws IOException {
-        List<String> command = new ArrayList<>();
-        command.add("ffmpeg");
-        command.add("-i");
-        command.add(inputFile);
-        command.add("-ac");
-        command.add(String.valueOf(config.getChannels()));
-        command.add("-b:a");
-        command.add(String.valueOf(config.getBitrate()));
-        command.add(outputFile);
+        File input = new File(inputFile);
+        if (!input.exists()) {
+            throw new IOException("Input file does not exist: " + inputFile);
+        }
+
+        String ffmpegPath = System.getProperty("ffmpeg.path", "ffmpeg");
+        String[] command = {ffmpegPath, "-y", "-i", inputFile, "-ac", String.valueOf(config.getChannels()), "-b:a", config.getBitrate() + "k", outputFile};
 
         ProcessBuilder pb = new ProcessBuilder(command);
         Process process = pb.start();
@@ -27,7 +32,14 @@ public class FFmpegWrapper {
             while ((line = reader.readLine()) != null) {
                 result.append(line).append("\n");
             }
+            int exitCode = process.waitFor();
+            if (exitCode != 0) {
+                throw new IOException("FFmpeg process exited with code " + exitCode + ". Output: " + result.toString());
+            }
             return result.toString();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            throw new IOException("FFmpeg process was interrupted", e);
         }
     }
 

@@ -1,53 +1,94 @@
 const path = require('path');
 const fs = require('fs');
-
-// Add debug logs
-console.log('Current working directory:', process.cwd());
-console.log('Relative path of test file:', __filename);
-try {
-    console.log('Resolved path of the `ffmpegWrapper`:', require.resolve('../../main/js/ffmpegWrapper'));
-} catch (e) {
-    console.error('Error resolving `ffmpegWrapper`:', e);
-}
-
+const { execSync } = require('child_process');
 const { downmix } = require('../../main/js/ffmpegWrapper');
+const defaultConfig = require('../../../config/defaults');
 
 describe('FFmpeg Downmix Wrapper', () => {
-    const outputDir = path.join(__dirname, '../resources/media/output');
+  const inputDir = path.join(__dirname, '../resources/media/input');
+  const outputDir = path.join(__dirname, '../resources/media/output');
+  const maxOutputFiles = 4; // Keep only the 4 most recent files (2 per input file)
 
-    beforeAll(() => {
-        // Ensure all parent directories exist
-        fs.mkdirSync(outputDir, { recursive: true });
-    });
+  beforeAll(() => {
+    fs.mkdirSync(outputDir, { recursive: true });
+  });
 
-    afterAll(() => {
-        const outputFile = path.join(outputDir, 'The_Visitor_at_the_Window2_stereo.mp3');
-        if (fs.existsSync(outputFile)) {
-            fs.unlinkSync(outputFile);
-        }
-    });
+  afterAll(() => {
+    // Keep only the most recent output files
+    const files = fs.readdirSync(outputDir)
+      .map(f => ({ name: f, time: fs.statSync(path.join(outputDir, f)).mtime.getTime() }))
+      .sort((a, b) => b.time - a.time);
 
-    it('should downmix Dolby Atmos WAV with default settings', async () => {
-        const inputFile = path.join(__dirname, '../resources/media/The Visitor at the Window2_atmos.wav');
-        const outputFile = path.join(outputDir, 'The_Visitor_at_the_Window2_stereo.mp3');
+    if (files.length > maxOutputFiles) {
+      files.slice(maxOutputFiles).forEach(file => {
+        fs.unlinkSync(path.join(outputDir, file.name));
+        console.log(`Deleted old output file: ${file.name}`);
+      });
+    }
+  });
 
-        // Add this line to check if the input file exists
-        console.log('Input file exists:', fs.existsSync(inputFile));
+  const getInputFileParams = (filePath) => {
+    const ffprobeCommand = `ffprobe -v error -select_streams a:0 -show_entries stream=codec_name,channels,bit_rate -of default=noprint_wrappers=1 "${filePath}"`;
+    return execSync(ffprobeCommand).toString();
+  };
 
-        // Add debug log before calling downmix
-        console.log('Calling downmix with inputFile:', inputFile, 'and outputFile:', outputFile);
+  const verifyOutputFile = (inputFilePath, outputFilePath, config) => {
+    const inputParams = getInputFileParams(inputFilePath);
+    const outputParams = getInputFileParams(outputFilePath);
 
-        try {
-            const result = await downmix(inputFile, { output: outputFile });
+    console.log('Input file parameters:', inputParams);
+    console.log('Output file parameters:', outputParams);
 
-            console.log('Downmix result:', result);
+    expect(outputParams).toContain(`codec_name=mp3`);
+    expect(outputParams).toContain(`channels=${config.channels}`);
+    expect(outputParams).toContain(`bit_rate=${config.bitrate}`);
 
-            // Add this line to check if the output file exists after downmix
-            console.log('Output file exists:', fs.existsSync(outputFile));
+    // Compare input and output channel count
+    const inputChannels = parseInt(inputParams.match(/channels=(\d+)/)[1]);
+    expect(config.channels).toBeLessThanOrEqual(inputChannels);
+  };
 
-            expect(fs.existsSync(outputFile)).toBe(true);
-        } catch (error) {
-            console.error('Error in downmix function:', error);
-        }
-    }, 60000); // Increase timeout to 60 seconds
+  fs.readdirSync(inputDir).forEach(inputFile => {
+    const inputFilePath = path.join(inputDir, inputFile);
+    const timestamp = Date.now();
+    const baseOutputName = `${path.basename(inputFile, path.extname(inputFile))}_downmix_${defaultConfig.channels}ch_${defaultConfig.bitrate / 1000}kbps`;
+    const outputFilePathDefault1 = path.join(outputDir, `${baseOutputName}_1_${timestamp}.mp3`);
+    const outputFilePathDefault2 = path.join(outputDir, `${baseOutputName}_2_${timestamp}.mp3`);
+
+    it(`should downmix ${inputFile} with default settings (file 1)`, async () => {
+      console.log('Input file exists:', fs.existsSync(inputFilePath));
+      console.log('Calling downmix with inputFile:', inputFilePath, 'and outputFile:', outputFilePathDefault1);
+
+      try {
+        const result = await downmix(inputFilePath, { output: outputFilePathDefault1 });
+        console.log('Downmix result:', result);
+        console.log('Output file exists:', fs.existsSync(outputFilePathDefault1));
+
+        expect(result).toContain('Success');
+        expect(fs.existsSync(outputFilePathDefault1)).toBe(true);
+
+        verifyOutputFile(inputFilePath, outputFilePathDefault1, defaultConfig);
+      } catch (error) {
+        console.error('Error in downmix function:', error);
+      }
+    }, 30000); // Increase timeout to 30 seconds
+
+    it(`should downmix ${inputFile} with default settings (file 2)`, async () => {
+      console.log('Input file exists:', fs.existsSync(inputFilePath));
+      console.log('Calling downmix with inputFile:', inputFilePath, 'and outputFile:', outputFilePathDefault2);
+
+      try {
+        const result = await downmix(inputFilePath, { output: outputFilePathDefault2 });
+        console.log('Downmix result:', result);
+        console.log('Output file exists:', fs.existsSync(outputFilePathDefault2));
+
+        expect(result).toContain('Success');
+        expect(fs.existsSync(outputFilePathDefault2)).toBe(true);
+
+        verifyOutputFile(inputFilePath, outputFilePathDefault2, defaultConfig);
+      } catch (error) {
+        console.error('Error in downmix function:', error);
+      }
+    }, 30000); // Increase timeout to 30 seconds
+  });
 });

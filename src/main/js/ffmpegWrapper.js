@@ -2,13 +2,14 @@ const { exec } = require('child_process');
 const defaults = require('../../../config/defaults');
 const util = require('util');
 const execPromise = util.promisify(exec);
-const { execSync } = require('child_process'); // Add this line to import execSync
+const { execSync } = require('child_process');
 
 async function downmix(input, options = {}) {
-  const output = options.output || 'output.wav';
-  const ffmpegCommand = `ffmpeg -y -i "${input}" -ac 2 "${output}"`;
+  const output = options.output || `output_${Date.now()}.mp3`;
+  const channels = options.channels || defaults.channels;
+  const bitrate = options.bitrate || defaults.bitrate;
+  const ffmpegCommand = `ffmpeg -y -i "${input}" -ac ${channels} -b:a ${bitrate} "${output}"`;
 
-  // Add debug log before executing the command
   console.log('Executing FFmpeg command:', ffmpegCommand);
 
   try {
@@ -20,16 +21,14 @@ async function downmix(input, options = {}) {
     if (stderr) {
       console.error('FFmpeg stderr:', stderr);
     }
-    // Add debug log after executing the command
     console.log('FFmpeg stdout:', stdout);
-    return stdout;
+    return 'Success';
   } catch (error) {
     console.error('Error executing FFmpeg command:', error);
     throw error;
   }
 }
 
-// Verify FFmpeg version
 try {
   const ffmpegVersion = execSync('ffmpeg -version').toString();
   if (!ffmpegVersion.includes('7.0.1')) {
