@@ -67,7 +67,7 @@ The project uses a configuration object with sensible defaults. You can find the
 module.exports = {
   outputFormat: 'mp3',
   channels: 2,
-  bitrate: 320000 // in bits per second
+  bitrate: 128000 // in bits per second
 };
 ```
 
@@ -85,7 +85,7 @@ public class Main {
         DownmixConfig config = new DownmixConfig();
         config.setOutputFormat("mp3");
         config.setChannels(2);
-        config.setBitrate(320000);
+        config.setBitrate(128000);
         String outputFile = "path/to/your/output/file.mp3";
 
         try {
